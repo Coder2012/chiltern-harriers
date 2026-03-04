@@ -20,31 +20,15 @@ const NAV_LINKS = [
 
 function BurgerIcon() {
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width={24}
-      height={24}
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-      strokeWidth={2}
-    >
+    <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
       <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
     </svg>
   );
 }
 
-function CloseIcon({ size = 24 }) {
+function CloseIcon() {
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width={size}
-      height={size}
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-      strokeWidth={2}
-    >
+    <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
       <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
     </svg>
   );
@@ -55,37 +39,34 @@ function App() {
 
   return (
     <BrowserRouter>
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-slate-950">
 
-        {/* ── Navbar ── z-[70] keeps it above the overlay z-[60] */}
-        <nav className="bg-white shadow-md relative z-[70]">
+        {/* ── Navbar ── */}
+        <nav className="bg-slate-900/80 backdrop-blur-md border-b border-slate-700/50 sticky top-0 z-[70]">
           <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
 
-            {/* Brand */}
             <Link
               to="/"
               onClick={() => setMenuOpen(false)}
-              className="font-extrabold text-xl text-blue-600 tracking-tight hover:text-blue-700 transition-colors"
+              className="font-extrabold text-xl text-amber-400 tracking-tight hover:text-amber-300 transition-colors"
             >
               Chiltern Harriers
             </Link>
 
-            {/* Desktop links */}
             <div className="hidden md:flex items-center gap-1">
               {NAV_LINKS.map(({ to, label }) => (
                 <Link
                   key={to}
                   to={to}
-                  className="px-4 py-2 text-gray-700 hover:text-blue-600 font-semibold rounded-lg hover:bg-blue-50 transition-colors"
+                  className="px-4 py-2 text-slate-300 hover:text-amber-400 font-semibold rounded-lg hover:bg-slate-800 transition-colors"
                 >
                   {label}
                 </Link>
               ))}
             </div>
 
-            {/* Mobile burger button */}
             <button
-              className="md:hidden p-2 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors"
+              className="md:hidden p-2 rounded-lg text-slate-300 hover:bg-slate-800 transition-colors"
               onClick={() => setMenuOpen((o) => !o)}
               aria-label={menuOpen ? 'Close menu' : 'Open menu'}
             >
@@ -95,23 +76,21 @@ function App() {
         </nav>
 
         {/* ── Mobile full-screen overlay ── */}
-        {/* z-[60] sits above the navbar. Explicit inset:0 ensures full viewport coverage. */}
         <div
           className={[
             'fixed z-[60] flex flex-col md:hidden',
             'transition-opacity duration-200',
             menuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none',
           ].join(' ')}
-          style={{ inset: 0, background: 'rgba(30, 64, 175, 0.97)' }}
+          style={{ inset: 0, background: 'rgba(2, 6, 23, 0.98)' }}
         >
-          {/* Nav links – vertically centred */}
           <nav className="flex flex-col items-center justify-center flex-1 gap-10">
             {NAV_LINKS.map(({ to, label }) => (
               <Link
                 key={to}
                 to={to}
                 onClick={() => setMenuOpen(false)}
-                className="text-white text-3xl font-bold tracking-wide hover:text-blue-200 transition-colors"
+                className="text-slate-100 text-3xl font-bold tracking-wide hover:text-amber-400 transition-colors"
               >
                 {label}
               </Link>

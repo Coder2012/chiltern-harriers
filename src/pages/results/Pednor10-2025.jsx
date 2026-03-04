@@ -17,9 +17,9 @@ function useIsDesktop() {
   return isDesktop;
 }
 
-function ChevronDownIcon() {
+function ChevronDownIcon({ className = '' }) {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width={16} height={16} viewBox="0 0 20 20" fill="currentColor">
+    <svg xmlns="http://www.w3.org/2000/svg" width={16} height={16} viewBox="0 0 20 20" fill="currentColor" className={className}>
       <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
     </svg>
   );
@@ -27,7 +27,7 @@ function ChevronDownIcon() {
 
 function FilterLabel({ children }) {
   return (
-    <span className="text-[11px] font-bold text-gray-400 uppercase tracking-wider">
+    <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
       {children}
     </span>
   );
@@ -35,17 +35,17 @@ function FilterLabel({ children }) {
 
 function ButtonGroup({ options, value, onChange }) {
   return (
-    <div className="flex rounded-xl border border-gray-200 overflow-hidden bg-white shadow-sm">
+    <div className="flex rounded-xl border border-slate-700 overflow-hidden bg-slate-800">
       {options.map((opt, i) => (
         <button
           key={opt.value}
           onClick={() => onChange(opt.value)}
           className={[
             'flex-1 px-3 py-2 text-sm font-medium transition-all whitespace-nowrap',
-            i > 0 ? 'border-l border-gray-200' : '',
+            i > 0 ? 'border-l border-slate-700' : '',
             value === opt.value
-              ? 'bg-blue-600 text-white shadow-inner'
-              : 'bg-white text-gray-600 hover:bg-blue-50 hover:text-blue-600',
+              ? 'bg-amber-500 text-slate-900 font-semibold'
+              : 'bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-slate-200',
           ].join(' ')}
         >
           {opt.label}
@@ -63,21 +63,26 @@ function FilterSelect({ label, value, onChange, options }) {
         <select
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="w-full appearance-none text-sm border border-gray-200 rounded-xl px-3 py-2 pr-8 bg-white text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+          className="w-full appearance-none text-sm border border-slate-700 rounded-xl px-3 py-2 pr-8 bg-slate-800 text-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500/50 transition"
         >
           <option value="">All</option>
           {options.map((opt) => (
-            <option key={opt} value={opt}>
-              {opt}
-            </option>
+            <option key={opt} value={opt}>{opt}</option>
           ))}
         </select>
-        <div className="absolute inset-y-0 right-2.5 flex items-center pointer-events-none text-gray-400">
+        <div className="absolute inset-y-0 right-2.5 flex items-center pointer-events-none text-slate-500">
           <ChevronDownIcon />
         </div>
       </div>
     </div>
   );
+}
+
+function positionClass(pos) {
+  if (pos === 1) return 'text-yellow-400 font-bold';
+  if (pos === 2) return 'text-slate-300 font-semibold';
+  if (pos === 3) return 'text-amber-600 font-semibold';
+  return 'text-slate-500 font-medium';
 }
 
 function Pednor102025() {
@@ -129,21 +134,17 @@ function Pednor102025() {
 
   return (
     <section>
-      <h1 className="text-3xl font-bold text-blue-600 mb-1">{race.name}</h1>
-      <p className="text-gray-500 mb-6">
+      <h1 className="text-3xl font-bold text-amber-400 mb-1">{race.name}</h1>
+      <p className="text-slate-500 mb-6">
         {new Date(race.date).toLocaleDateString('en-GB', {
-          weekday: 'long',
-          day: 'numeric',
-          month: 'long',
-          year: 'numeric',
+          weekday: 'long', day: 'numeric', month: 'long', year: 'numeric',
         })}
       </p>
 
       {/* ── Filter bar ── */}
-      <div className="mb-6 p-4 bg-white rounded-2xl border border-gray-200 shadow-sm">
+      <div className="mb-6 p-4 bg-slate-800 rounded-2xl border border-slate-700 shadow-lg">
         <div className="flex flex-col md:flex-row md:flex-wrap md:items-end gap-3 md:gap-4">
 
-          {/* Gender */}
           <div className="flex flex-col gap-1.5">
             <FilterLabel>Gender</FilterLabel>
             <ButtonGroup
@@ -157,7 +158,6 @@ function Pednor102025() {
             />
           </div>
 
-          {/* Relay */}
           <div className="flex flex-col gap-1.5">
             <FilterLabel>Type</FilterLabel>
             <ButtonGroup
@@ -171,24 +171,13 @@ function Pednor102025() {
             />
           </div>
 
-          <FilterSelect
-            label="Club / Team"
-            value={club}
-            onChange={setClub}
-            options={clubs}
-          />
-
-          <FilterSelect
-            label="Category"
-            value={category}
-            onChange={setCategory}
-            options={categories}
-          />
+          <FilterSelect label="Club / Team" value={club} onChange={setClub} options={clubs} />
+          <FilterSelect label="Category" value={category} onChange={setCategory} options={categories} />
 
           {hasFilters && (
             <button
               onClick={clearFilters}
-              className="flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-red-500 hover:text-red-600 bg-red-50 hover:bg-red-100 rounded-xl transition-colors md:self-end"
+              className="flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-red-400 bg-red-950/50 hover:bg-red-900/50 rounded-xl transition-colors md:self-end"
             >
               <svg xmlns="http://www.w3.org/2000/svg" width={16} height={16} viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
@@ -199,11 +188,11 @@ function Pednor102025() {
         </div>
       </div>
 
-      <p className="text-sm text-gray-500 mb-3">
-        Showing <span className="font-semibold text-gray-700">{filtered.length}</span> of {results.length} entries
+      <p className="text-sm text-slate-500 mb-3">
+        Showing <span className="font-semibold text-slate-300">{filtered.length}</span> of {results.length} entries
       </p>
 
-      {/* Mobile: collapsed rows with expandable detail card */}
+      {/* Mobile: accordion */}
       {!isDesktop && (
         <div className="space-y-1">
           {filtered.map((r) => {
@@ -213,66 +202,57 @@ function Pednor102025() {
                 <button
                   onClick={() => toggleExpanded(r.raceNumber)}
                   className={[
-                    'w-full flex items-center gap-3 px-3 py-2.5 bg-white border border-gray-200 text-left transition-colors hover:bg-blue-50',
+                    'w-full flex items-center gap-3 px-3 py-2.5 bg-slate-800 border border-slate-700 text-left transition-colors hover:bg-slate-700',
                     isOpen ? 'rounded-t-lg' : 'rounded-lg',
                   ].join(' ')}
                 >
-                  <span className="w-8 shrink-0 text-sm text-gray-400">{r.position}</span>
-                  <span className="flex-1 text-sm font-medium text-gray-800">{r.name}</span>
-                  <span className="text-sm tabular-nums font-medium text-gray-700">{r.time}</span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width={16}
-                    height={16}
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    className={`shrink-0 text-gray-400 transition-transform ${isOpen ? 'rotate-180' : ''}`}
-                  >
-                    <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-                  </svg>
+                  <span className={`w-8 shrink-0 text-sm ${positionClass(r.position)}`}>{r.position}</span>
+                  <span className="flex-1 text-sm font-medium text-slate-100">{r.name}</span>
+                  <span className="text-sm tabular-nums font-semibold text-amber-400">{r.time}</span>
+                  <ChevronDownIcon className={`shrink-0 text-slate-500 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
                 </button>
 
                 {isOpen && (
-                  <div className="border border-t-0 border-gray-200 rounded-b-lg bg-blue-50/50 px-4 py-3">
+                  <div className="border border-t-0 border-slate-700 rounded-b-lg bg-slate-900/60 px-4 py-3">
                     <dl className="grid grid-cols-2 gap-x-4 gap-y-1.5 text-sm">
                       {r.club && (
                         <>
-                          <dt className="text-gray-500">Club</dt>
-                          <dd className="text-gray-800 font-medium">{r.club}</dd>
+                          <dt className="text-slate-500">Club</dt>
+                          <dd className="text-slate-200 font-medium">{r.club}</dd>
                         </>
                       )}
-                      <dt className="text-gray-500">Category</dt>
-                      <dd className="text-gray-800 font-medium">{r.category}</dd>
+                      <dt className="text-slate-500">Category</dt>
+                      <dd className="text-slate-200 font-medium">{r.category}</dd>
                       {r.split && (
                         <>
-                          <dt className="text-gray-500">Split</dt>
-                          <dd className="tabular-nums text-gray-800">{r.split}</dd>
+                          <dt className="text-slate-500">Split</dt>
+                          <dd className="tabular-nums text-slate-200">{r.split}</dd>
                         </>
                       )}
                       {r.menPosition && (
                         <>
-                          <dt className="text-gray-500">Men's pos.</dt>
-                          <dd className="text-gray-800">{r.menPosition}</dd>
+                          <dt className="text-slate-500">Men's pos.</dt>
+                          <dd className="text-slate-200">{r.menPosition}</dd>
                         </>
                       )}
                       {r.womenPosition && (
                         <>
-                          <dt className="text-gray-500">Women's pos.</dt>
-                          <dd className="text-gray-800">{r.womenPosition}</dd>
+                          <dt className="text-slate-500">Women's pos.</dt>
+                          <dd className="text-slate-200">{r.womenPosition}</dd>
                         </>
                       )}
                       {r.relayPosition && (
                         <>
-                          <dt className="text-gray-500">Relay pos.</dt>
-                          <dd className="text-gray-800">{r.relayPosition}</dd>
+                          <dt className="text-slate-500">Relay pos.</dt>
+                          <dd className="text-slate-200">{r.relayPosition}</dd>
                         </>
                       )}
-                      <dt className="text-gray-500">Race no.</dt>
-                      <dd className="text-gray-800">{r.raceNumber}</dd>
+                      <dt className="text-slate-500">Race no.</dt>
+                      <dd className="text-slate-200">{r.raceNumber}</dd>
                       {r.award && (
                         <>
-                          <dt className="text-gray-500">Award</dt>
-                          <dd className="font-semibold text-blue-700">{r.award}</dd>
+                          <dt className="text-slate-500">Award</dt>
+                          <dd className="font-semibold text-amber-400">{r.award}</dd>
                         </>
                       )}
                     </dl>
@@ -286,10 +266,10 @@ function Pednor102025() {
 
       {/* Desktop: full table */}
       {isDesktop && (
-        <div className="overflow-x-auto rounded-xl border border-gray-200 shadow-sm">
+        <div className="overflow-x-auto rounded-xl border border-slate-700 shadow-lg">
           <table className="w-full text-sm border-collapse">
             <thead>
-              <tr className="bg-blue-600 text-white text-left">
+              <tr className="bg-slate-900 text-slate-400 text-left border-b border-slate-700">
                 <th className="px-3 py-3 font-semibold">Pos</th>
                 <th className="px-3 py-3 font-semibold">Men</th>
                 <th className="px-3 py-3 font-semibold">Women</th>
@@ -305,21 +285,18 @@ function Pednor102025() {
             </thead>
             <tbody>
               {filtered.map((r) => (
-                <tr
-                  key={r.raceNumber}
-                  className="border-b border-gray-100 even:bg-gray-50 hover:bg-blue-50 transition-colors"
-                >
-                  <td className="px-3 py-2.5 font-medium">{r.position}</td>
-                  <td className="px-3 py-2.5 text-gray-500">{r.menPosition ?? ''}</td>
-                  <td className="px-3 py-2.5 text-gray-500">{r.womenPosition ?? ''}</td>
-                  <td className="px-3 py-2.5 text-gray-500">{r.relayPosition ?? ''}</td>
-                  <td className="px-3 py-2.5 text-gray-400">{r.raceNumber}</td>
-                  <td className="px-3 py-2.5 font-medium text-gray-900">{r.name}</td>
-                  <td className="px-3 py-2.5 text-gray-600">{r.club ?? ''}</td>
-                  <td className="px-3 py-2.5">{r.category}</td>
-                  <td className="px-3 py-2.5 tabular-nums text-gray-600">{r.split ?? ''}</td>
-                  <td className="px-3 py-2.5 tabular-nums font-semibold text-gray-900">{r.time}</td>
-                  <td className="px-3 py-2.5 text-blue-700 font-semibold">{r.award ?? ''}</td>
+                <tr key={r.raceNumber} className="border-b border-slate-700/50 even:bg-slate-800/40 hover:bg-slate-700/60 transition-colors">
+                  <td className={`px-3 py-2.5 ${positionClass(r.position)}`}>{r.position}</td>
+                  <td className="px-3 py-2.5 text-slate-500">{r.menPosition ?? ''}</td>
+                  <td className="px-3 py-2.5 text-slate-500">{r.womenPosition ?? ''}</td>
+                  <td className="px-3 py-2.5 text-slate-500">{r.relayPosition ?? ''}</td>
+                  <td className="px-3 py-2.5 text-slate-600">{r.raceNumber}</td>
+                  <td className="px-3 py-2.5 font-medium text-slate-100">{r.name}</td>
+                  <td className="px-3 py-2.5 text-slate-400">{r.club ?? ''}</td>
+                  <td className="px-3 py-2.5 text-slate-400">{r.category}</td>
+                  <td className="px-3 py-2.5 tabular-nums text-slate-400">{r.split ?? ''}</td>
+                  <td className="px-3 py-2.5 tabular-nums font-semibold text-amber-400">{r.time}</td>
+                  <td className="px-3 py-2.5 font-semibold text-amber-400">{r.award ?? ''}</td>
                 </tr>
               ))}
             </tbody>

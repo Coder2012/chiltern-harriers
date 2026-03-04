@@ -12,13 +12,13 @@ function Results() {
 
   return (
     <div>
-      <h1 className="text-4xl font-bold text-blue-600 mb-8">Results</h1>
+      <h1 className="text-4xl font-bold text-amber-400 mb-8">Results</h1>
       <ul className="space-y-2">
         {races.map((race) => (
           <li key={race.id}>
             <Link
               to={race.path}
-              className="block px-4 py-3 bg-white rounded-lg shadow hover:shadow-md hover:text-blue-600 font-medium text-gray-700 transition"
+              className="block px-4 py-3 bg-slate-800 rounded-lg border border-slate-700 hover:border-amber-500/50 hover:bg-slate-700 font-medium text-slate-200 hover:text-amber-400 transition-all"
             >
               {race.label}
             </Link>
