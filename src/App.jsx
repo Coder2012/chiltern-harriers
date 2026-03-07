@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Link, NavLink } from 'react-router-dom';
 import Home from './pages/Home';
 import About from './pages/About';
 import Contact from './pages/Contact';
@@ -50,18 +50,24 @@ function App() {
               onClick={() => setMenuOpen(false)}
               className="font-extrabold text-xl text-amber-400 tracking-tight hover:text-amber-300 transition-colors"
             >
-              Chiltern Harriers
+              Chiltern Harriers Results Viewer
             </Link>
 
-            <div className="hidden md:flex items-center gap-1">
+            <div className="hidden md:flex items-stretch gap-1 h-16">
               {NAV_LINKS.map(({ to, label }) => (
-                <Link
+                <NavLink
                   key={to}
                   to={to}
-                  className="px-4 py-2 text-slate-300 hover:text-amber-400 font-semibold rounded-lg hover:bg-slate-800 transition-colors"
+                  end={to === '/'}
+                  className={({ isActive }) => [
+                    'px-4 flex items-center border-b-4 text-sm transition-colors',
+                    isActive
+                      ? 'border-green-500 text-white font-bold'
+                      : 'border-transparent text-slate-300 hover:text-white font-semibold hover:border-slate-600',
+                  ].join(' ')}
                 >
                   {label}
-                </Link>
+                </NavLink>
               ))}
             </div>
 
@@ -86,14 +92,20 @@ function App() {
         >
           <nav className="flex flex-col items-center justify-center flex-1 gap-10">
             {NAV_LINKS.map(({ to, label }) => (
-              <Link
+              <NavLink
                 key={to}
                 to={to}
+                end={to === '/'}
                 onClick={() => setMenuOpen(false)}
-                className="text-slate-100 text-3xl font-bold tracking-wide hover:text-amber-400 transition-colors"
+                className={({ isActive }) => [
+                  'text-3xl font-bold tracking-wide border-b-4 pb-1 transition-colors',
+                  isActive
+                    ? 'text-white border-green-500'
+                    : 'text-slate-300 border-transparent hover:text-white',
+                ].join(' ')}
               >
                 {label}
-              </Link>
+              </NavLink>
             ))}
           </nav>
         </div>
