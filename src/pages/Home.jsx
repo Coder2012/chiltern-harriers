@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import heroImage from '../assets/img/homepage_hero_desktop.png';
 
 function Home() {
@@ -20,18 +21,11 @@ function Home() {
           not so great for a quick look on your phone. This site takes those spreadsheets and turns
           them into fast, filterable, mobile-friendly results pages.
         </p>
-        <div className="mt-8 flex flex-col sm:flex-row gap-3">
-          <div className="flex-1 bg-slate-800 border border-slate-700 rounded-xl px-5 py-4">
-            <p className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Road Race</p>
-            <p className="text-slate-100 font-semibold">Pednor 10</p>
-            <p className="text-slate-400 text-sm">2025 results</p>
-          </div>
-          <div className="flex-1 bg-slate-800 border border-slate-700 rounded-xl px-5 py-4">
-            <p className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Cross Country</p>
-            <p className="text-slate-100 font-semibold">Chiltern League 2025/26</p>
-            <p className="text-slate-400 text-sm">Matches 1 – 5</p>
-          </div>
-        </div>
+        <p className="mt-6">
+          <Link to="/results" className="text-amber-400 hover:text-amber-300 font-semibold">
+            View results &rarr;
+          </Link>
+        </p>
       </div>
     </div>
   );
